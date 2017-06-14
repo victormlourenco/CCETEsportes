@@ -3,13 +3,13 @@ package config
 import (
 	"fmt"
 
-	"CCETEsportes/lib/log"
+	"git.sirius.tivit.com.br/tivit-go-to/worker/backend/src/worker/lib/log"
 
 	"github.com/spf13/viper"
 )
 
 const (
-	configName string = "database"
+	configName string = "main"
 )
 
 func init() {
@@ -18,13 +18,7 @@ func init() {
 }
 
 func setDefaultValues() {
-	viper.SetDefault(configName+".DBProvider", "postgres")
-	viper.SetDefault(configName+".DBName", "ccet_esportes")
-	viper.SetDefault(configName+".DBHost", "localhost")
-	viper.SetDefault(configName+".DBPort", "5432")
-	viper.SetDefault(configName+".DBUser", "postgres")
-	viper.SetDefault(configName+".DBPass", "postgres")
-	viper.SetDefault(configName+".DBSslMode", "require")
+	viper.SetDefault(configName+".ServerAddress", "localhost:8080")
 }
 
 func readFile() {

@@ -1,0 +1,18 @@
+{
+    "database": {
+        "DBProvider": "postgres",
+        "DBName": "ccet_esportes",
+        "DBHost": "localhost",
+        "DBPort": "5432",
+        "DBUser": "postgres",
+        "DBPass": "postgres",
+        "DBSslMode": "disable"
+    },
+    "log": {
+        "FilePath": "./",
+        "FileName": "main.log"
+    },
+    "main": {
+        "ServerAddress": "localhost:8085"
+    }
+}

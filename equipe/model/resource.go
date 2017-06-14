@@ -2,6 +2,7 @@ package model
 
 import (
 	libDB "CCETEsportes/lib/database"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq" //gorm dependency
 )
@@ -17,10 +18,6 @@ func init() {
 	* estrutura no banco. Devido a isso as associações devem ser inseridas manualmente. */
 	resource.Callback().Create().After("gorm:begin_transaction").Register("ignore_associations", ignoreAssociations)
 	resource.Callback().Update().After("gorm:begin_transaction").Register("ignore_associations", ignoreAssociations)
-	//TODO: Error handler
-
-	//resource.DB().SetMaxIdleConns(n int)
-	//resource.DB().SetMaxOpenConns(n int)
 }
 
 func ignoreAssociations(s *gorm.Scope) {
@@ -29,10 +26,10 @@ func ignoreAssociations(s *gorm.Scope) {
 
 // MigrateDBTables migrates Chat domain tables (without constraints) to the database provided
 func MigrateDBTables() {
-	Team{}.migrateTables()
+	Equipe{}.migrateTables()
 }
 
 // MigrateDBConstraints migrates Chat domain constraints to the database provided
 func MigrateDBConstraints() {
-	Team{}.migrateConstraints()
+	Equipe{}.migrateConstraints()
 }

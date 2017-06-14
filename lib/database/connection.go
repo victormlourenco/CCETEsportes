@@ -38,6 +38,10 @@ func init() {
 	resource.Callback().Update().After("gorm:begin_transaction").Register("ignore_associations", ignoreAssociations)
 }
 
-func Get() {
+func ignoreAssociations(s *gorm.Scope) {
+	s.Set("gorm:save_associations", false)
+}
+
+func Get() *gorm.DB {
 	return resource
 }
