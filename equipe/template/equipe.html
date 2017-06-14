@@ -54,8 +54,8 @@
           </tr>
         </thead>
         <tbody>
+          {{range .}}
           <tr>
-            {{range .}}
             <td>{{.Pontuacao}}</td>
             <td>{{.Nome}}</td>
             <td>{{.Partidas}}</td>
@@ -64,8 +64,8 @@
             <td>{{.Empates}}</td>
             <td>{{.GolsPro}}</td>
             <td>{{.GolsContra}}</td>
-            {{end}}
           </tr>
+          {{end}}
         </tbody>
       </table>
     </div>
