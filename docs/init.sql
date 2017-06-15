@@ -30,7 +30,7 @@ CREATE TABLE IF NOT exists public.Equipes (
 CREATE TABLE IF NOT exists public.Partidas (
                 Cod_Partida BIGINT NOT NULL DEFAULT NEXTVAL('partidas_cod_seq'),
                 Local TEXT,
-                Data DATE,
+                Data TIMESTAMP,
                 Cod_Equipe1 BIGINT NOT NULL,
                 Gols_Equipe1 BIGINT NOT NULL DEFAULT 0,
                 Cod_Equipe2 BIGINT NOT NULL,

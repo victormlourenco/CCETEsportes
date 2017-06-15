@@ -6,19 +6,11 @@
             if ($(e).attr("class") == 'cw-relative-date') {
 
                 // Initialise momentjs
-                var now = moment();
                 moment.locale('pt-br');
 
                 // Grab the datetime for the element and compare to now                    
-                var time = moment($(e).attr('datetime'));
-                var diff = now.diff(time, 'days');
-
-                // If less than one day ago/away use relative, else use calendar display
-                if (diff <= 1 && diff >= -1) {
-                    $(e).html('<span>' + time.from(now) + '</span>');
-                } else {
-                    $(e).html('<span>' + time.calendar() + '</span>');
-                }
+                var time = moment($(e).attr('datetime')).add(3, 'hours');
+                $(e).html('<span>' + time.format('LLL') + '</span>');
             }
         });
     };
