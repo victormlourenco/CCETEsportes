@@ -5,6 +5,8 @@ import (
 	"CCETEsportes/lib/database"
 	"errors"
 	"time"
+
+	"github.com/jinzhu/gorm"
 )
 
 // Partida : Definição do objeto de tipo partida.
@@ -54,14 +56,17 @@ func (Partida) GetAll() ([]Partida, error) {
 }
 
 // Save : Armazena partida no banco
-func (p *Partida) Save() error {
+func (p *Partida) Save(tx *gorm.DB) error {
 	err := p.Validate()
 	if err != nil {
 		return err
 	}
-	result := database.Get().Create(&p)
+
+	result := tx.Create(&p)
 	if result.Error != nil {
+		tx.Rollback()
 		return result.Error
 	}
+
 	return nil
 }

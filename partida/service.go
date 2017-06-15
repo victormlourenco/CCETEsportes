@@ -1,6 +1,8 @@
 package partida
 
 import (
+	equipeModel "CCETEsportes/equipe/model"
+	"CCETEsportes/lib/database"
 	"CCETEsportes/partida/model"
 	"strconv"
 	"time"
@@ -13,7 +15,7 @@ func ListarPartidas() ([]model.Partida, error) {
 	return model.Partida{}.GetAll()
 }
 
-// AdicionarPartida : Recebe um formulario e converte para um objeto do tipo Partida
+// AdicionarPartida : Recebe um formulario e converte para um objeto do tipo Partida e atualiza a tabela do Campeonato
 func AdicionarPartida(c *gin.Context) error {
 	partida := model.Partida{}
 
@@ -50,10 +52,60 @@ func AdicionarPartida(c *gin.Context) error {
 	}
 	partida.Data = t
 
-	err = partida.Save()
+	tx := database.Get().Begin()
+
+	err = partida.Save(tx)
 	if err != nil {
 		return err
 	}
+
+	eqp1 := equipeModel.Equipe{CodEquipe: partida.CodEquipe1}
+	err = eqp1.Get()
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	eqp2 := equipeModel.Equipe{CodEquipe: partida.CodEquipe2}
+	err = eqp1.Get()
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	eqp1.GolsPro = eqp1.GolsPro + partida.GolsEquipe1
+	eqp1.GolsContra = eqp1.GolsContra + partida.GolsEquipe2
+	eqp2.GolsPro = eqp2.GolsPro + partida.GolsEquipe2
+	eqp2.GolsContra = eqp2.GolsContra + partida.GolsEquipe1
+
+	if partida.GolsEquipe1 > partida.GolsEquipe2 {
+		eqp1.Vitorias++
+		eqp2.Derrotas++
+		eqp1.Pontuacao = eqp1.Pontuacao + 3
+	} else if partida.GolsEquipe2 > partida.GolsEquipe1 {
+		eqp2.Vitorias++
+		eqp1.Derrotas++
+		eqp2.Pontuacao = eqp2.Pontuacao + 3
+	} else {
+		eqp2.Empates++
+		eqp1.Empates++
+		eqp1.Pontuacao = eqp1.Pontuacao + 1
+		eqp2.Pontuacao = eqp2.Pontuacao + 1
+	}
+
+	err = eqp1.Save(tx)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	err = eqp2.Save(tx)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	tx.Commit()
 
 	return nil
 }

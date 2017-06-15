@@ -2,6 +2,9 @@ package model
 
 import (
 	"CCETEsportes/lib/database"
+	"errors"
+
+	"github.com/jinzhu/gorm"
 )
 
 // Equipe : Definição do objeto de tipo equipe.
@@ -30,4 +33,26 @@ func (Equipe) GetAll() ([]Equipe, error) {
 	}
 
 	return equipes, nil
+}
+
+// Get : Consulta uma determinada equipe
+func (e *Equipe) Get() error {
+	get := database.Get().First(e)
+	if get.Error != nil {
+		return get.Error
+	}
+	if get.RowsAffected <= 0 {
+		return errors.New("Equipe não encontrada")
+	}
+
+	return nil
+}
+
+// Save : Atualiza equipe no banco
+func (e *Equipe) Save(tx *gorm.DB) error {
+	result := tx.Model(Equipe{}).Save(&e)
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
 }
