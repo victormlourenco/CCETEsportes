@@ -67,7 +67,7 @@ func AdicionarPartida(c *gin.Context) error {
 	}
 
 	eqp2 := equipeModel.Equipe{CodEquipe: partida.CodEquipe2}
-	err = eqp1.Get()
+	err = eqp2.Get()
 	if err != nil {
 		tx.Rollback()
 		return err
