@@ -3,6 +3,7 @@ package main
 import (
 	"CCETEsportes/config"
 	equipeCtrl "CCETEsportes/equipe/controller"
+	partidaCtrl "CCETEsportes/partida/controller"
 	"net/http"
 
 	"github.com/gin-gonic/contrib/static"
@@ -13,6 +14,7 @@ func main() {
 	router := gin.Default()
 	publicRoute := router.Group("/")
 	equipeCtrl.Create(publicRoute)
+	partidaCtrl.Create(publicRoute)
 	s := &http.Server{
 		Addr:    config.GetString("ServerAddress"),
 		Handler: router,

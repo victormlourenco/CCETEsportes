@@ -25,55 +25,36 @@
       aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-    <a class="navbar-brand" href="#">CCET Esportes</a>
+    <a class="navbar-brand" href="../">CCET Esportes</a>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Equipes <span class="sr-only">(current)</span></a>
-        </li>
         <li class="nav-item">
-          <a class="nav-link" href="partidas/">Partidas</a>
+          <a class="nav-link" href="../">Equipes</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Partidas <span class="sr-only">(current)</span></a>
         </li>
       </ul>
     </div>
   </nav>
 
+
   <div class="container">
-    <h2>Classificação</h2>
-    <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Posição</th>
-            <th>Pontos</th>
-            <th>Equipe</th>
-            <th>Partidas</th>
-            <th>Vitórias</th>
-            <th>Derrotas</th>
-            <th>Empates</th>
-            <th>GP</th>
-            <th>GC</th>
-            <th>SG</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{ range $key, $value := . }}
-          <tr>
-            <td>{{$value.Posicao}}</td>
-            <td>{{$value.Pontuacao}}</td>
-            <td><img src="../assets/img/equipes/{{$value.CodEquipe}}.png" alt="{{$value.Nome}}" width="28" height="21"> {{$value.Nome}}</td>
-            <td>{{$value.Partidas}}</td>
-            <td>{{$value.Vitorias}}</td>
-            <td>{{$value.Derrotas}}</td>
-            <td>{{$value.Empates}}</td>
-            <td>{{$value.GolsPro}}</td>
-            <td>{{$value.GolsContra}}</td>
-            <td>{{$value.SaldoGols}}</td>
-          </tr>
-          {{end}}
-        </tbody>
-      </table>
+    <h2>Partidas</h2>
+    <button type="button" class="btn btn-primary adicionarpartida" onclick="window.location='./novo'"><i class="fa fa-plus" aria-hidden="true"></i> Partida</button> 
+    {{ range $key, $value := . }}
+    <div class="card text-center">
+      <div class="card-block">
+        <h4 class="card-title"><img src="../assets/img/equipes/{{$value.CodEquipe1}}.png" alt="{{$value.Equipe1.Nome}}}"> {{$value.Equipe1.Nome}}
+          <span class="badge badge-default">{{$value.GolsEquipe1}}</span> X <span class="badge badge-default">{{$value.GolsEquipe2}}</span>          {{$value.Equipe2.Nome}} <img src="../assets/img/equipes/{{$value.CodEquipe2}}.png" alt="{{$value.Equipe2.Nome}}}">
+        </h4>
+        <p class="card-text">{{$value.Local}}</p>
+      </div>
+      <div class="card-footer text-muted" id="input">
+        <time class="cw-relative-date" datetime="{{$value.Data}}"></time>
+      </div>
     </div>
+    {{end}}
   </div>
 
 
@@ -81,9 +62,15 @@
     ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <script src="../assets/js/jquery-3.2.1.min.js"></script>
+  <script src="../assets/js/tether.min.js"></script>
   <script src="../assets/js/bootstrap.min.js"></script>
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
   <script src="../assets/js/ie10-viewport-bug-workaround.js"></script>
+  <script src="../assets/js/moment-with-locales.js"></script>
+  <script src="../assets/js/partida.js"></script>
+  </script>
+
+
 </body>
 
 </html>

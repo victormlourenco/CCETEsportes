@@ -1,7 +1,7 @@
 package model
 
 type Equipe struct {
-	CodEquipe  uint64
+	CodEquipe  uint64 `gorm:"primary_key:true"`
 	Nome       string
 	Estado     string
 	Pontuacao  uint64
@@ -11,6 +11,8 @@ type Equipe struct {
 	Vitorias   uint64
 	Derrotas   uint64
 	Empates    uint64
+	SaldoGols  int64
+	Posicao    int64
 	Tecnico    string
 }
 
@@ -27,7 +29,7 @@ func (Equipe) migrateConstraints() {
 
 func (Equipe) GetAll() ([]Equipe, error) {
 	var equipes []Equipe
-	result := resource.Find(&equipes)
+	result := resource.Raw("SELECT cod_equipe, nome, pontuacao, partidas, vitorias, empates, derrotas, gols_pro, gols_contra, gols_pro - gols_contra AS saldo_gols, row_number() OVER (ORDER BY pontuacao DESC, gols_pro - gols_contra DESC) as posicao FROM equipes").Order("posicao").Find(&equipes)
 	if result.Error != nil {
 		return nil, result.Error
 	}

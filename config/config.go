@@ -3,7 +3,7 @@ package config
 import (
 	"fmt"
 
-	"git.sirius.tivit.com.br/tivit-go-to/worker/backend/src/worker/lib/log"
+	"CCETEsportes/lib/log"
 
 	"github.com/spf13/viper"
 )

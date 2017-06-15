@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../assets/favicon.ico">
+
+  <title>CCET Esportes</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="../assets/css/style.css" rel="stylesheet">
+  <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse mb-4">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+      aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    <a class="navbar-brand" href="../">CCET Esportes</a>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="../">Equipes</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="../partidas">Partidas <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <div class="container">
+
+    {{if .Sucesso}}
+    <div class="alert alert-success" role="alert">
+      {{.Mensagem}}
+    </div>
+    {{end}} 
+    
+    {{if .Erro}}
+    <div class="alert alert-danger" role="alert">
+      {{.Mensagem}}
+    </div>
+    {{end}}
+
+    <h2>Adicionar Partida</h2>
+    <form method="post">
+      <div class="form-inline">
+        <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="equipe1" name="equipe1" required>
+          <option value="">Equipe 1</option>
+          {{ range $key, $value := .Equipes }}
+          <option value="{{$value.CodEquipe}}">{{$value.Nome}}</option>
+          {{end}}
+        </select>
+
+        <label class="sr-only" for="equipe1Gols">Gols</label>
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <input type="number" min="0" class="form-control" id="equipe1Gols" name="equipe1Gols" placeholder="Gols">
+        </div>
+      </div>
+
+      <div class="form-inline">
+        <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="equipe2" name="equipe2" required>
+          <option value="">Equipe 2</option>
+          {{ range $key, $value := .Equipes }}
+          <option value="{{$value.CodEquipe}}">{{$value.Nome}}</option>
+          {{end}}
+        </select>
+
+        <label class="sr-only" for="equipe2Gols">Gols</label>
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <input type="number" min="0" class="form-control" id="equipe2Gols" name="equipe2Gols" placeholder="Gols">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="local" class="col-2 col-form-label">Local</label>
+        <div class="col-10">
+          <input class="form-control" type="text" id="local" name="local" required>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="data" class="col-2 col-form-label">Data</label>
+        <div class="col-10">
+          <input class="form-control" type="datetime-local" id="data" name="data" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Adicionar</button>
+    </form>
+
+  </div>
+
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="../assets/js/jquery-3.2.1.min.js"></script>
+  <script src="../assets/js/tether.min.js"></script>
+  <script src="../assets/js/bootstrap.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="../assets/js/ie10-viewport-bug-workaround.js"></script>
+  <script src="../assets/js/moment-with-locales.js"></script>
+  <script src="../assets/js/partida.js"></script>
+  </script>
+
+
+</body>
+
+</html>

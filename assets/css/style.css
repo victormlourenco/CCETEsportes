@@ -1,3 +1,20 @@
 body {
   min-height: 75rem;
 }
+
+
+.card.text-center {
+    margin-bottom: 10px;
+}
+
+
+button.btn.btn-primary.adicionarpartida {
+    position: absolute;
+    right: 15px;
+    top: -2px;
+    z-index: 1;
+}
+
+.form-inline {
+    margin-bottom: 10px;
+}
