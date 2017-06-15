@@ -19,8 +19,8 @@ type Equipe struct {
 	Vitorias   uint64
 	Derrotas   uint64
 	Empates    uint64
-	SaldoGols  int64
-	Posicao    int64
+	SaldoGols  int64 `gorm:"-"`
+	Posicao    int64 `gorm:"-"`
 	Tecnico    string
 }
 
