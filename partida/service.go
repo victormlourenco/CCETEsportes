@@ -1,7 +1,6 @@
 package partida
 
 import (
-	equipeModel "CCETEsportes/equipe/model"
 	"CCETEsportes/partida/model"
 	"strconv"
 	"time"
@@ -9,16 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ListarPartidas : Chama a model para consultar as partidas do banco
 func ListarPartidas() ([]model.Partida, error) {
 	return model.Partida{}.GetAll()
 }
 
-type Response struct {
-	Erro     bool
-	Mensagem string
-	Equipes  []equipeModel.Equipe
-}
-
+// AdicionarPartida : Recebe um formulario e converte para um objeto do tipo Partida
 func AdicionarPartida(c *gin.Context) error {
 	partida := model.Partida{}
 

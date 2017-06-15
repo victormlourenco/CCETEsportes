@@ -12,6 +12,7 @@ import (
 
 var r *render.Render
 
+// Resposta : Definição do objeto esperado pelo template
 type Resposta struct {
 	Sucesso  bool
 	Erro     bool
@@ -19,6 +20,7 @@ type Resposta struct {
 	Equipes  interface{}
 }
 
+// Create : Criação das rotas HTTP
 func Create(router *gin.RouterGroup) {
 	equipe := router.Group("/partidas")
 	{
@@ -40,8 +42,12 @@ func getPartidas(c *gin.Context) {
 }
 
 func adicionarPartida(c *gin.Context) {
-	equipes, _ := equipeApi.ListarEquipes()
-	r.HTML(c.Writer, http.StatusOK, "adicionar_partida", Resposta{Sucesso: false, Erro: false, Mensagem: "", Equipes: equipes})
+	equipes, err := equipeApi.ListarEquipes()
+	if err != nil {
+		r.HTML(c.Writer, http.StatusOK, "adicionar_partida", Resposta{Sucesso: false, Erro: true, Mensagem: err.Error(), Equipes: equipes})
+	} else {
+		r.HTML(c.Writer, http.StatusOK, "adicionar_partida", Resposta{Sucesso: false, Erro: false, Mensagem: "", Equipes: equipes})
+	}
 }
 
 func inserirPartida(c *gin.Context) {
@@ -49,7 +55,7 @@ func inserirPartida(c *gin.Context) {
 	err := partidaApi.AdicionarPartida(c)
 	if err != nil {
 		println(err.Error())
-		r.HTML(c.Writer, http.StatusOK, "adicionar_partida", Resposta{Sucesso: false, Erro: true, Mensagem: err.Error(), Equipes: equipes})
+		r.HTML(c.Writer, http.StatusBadRequest, "adicionar_partida", Resposta{Sucesso: false, Erro: true, Mensagem: err.Error(), Equipes: equipes})
 	} else {
 		r.HTML(c.Writer, http.StatusOK, "adicionar_partida", Resposta{Sucesso: true, Erro: false, Mensagem: "Partida inserida com suceso", Equipes: equipes})
 	}

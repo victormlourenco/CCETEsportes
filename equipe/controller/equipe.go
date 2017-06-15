@@ -11,6 +11,7 @@ import (
 
 var r *render.Render
 
+// Create : Criação das rotas HTTP
 func Create(router *gin.RouterGroup) {
 	equipe := router.Group("")
 	{

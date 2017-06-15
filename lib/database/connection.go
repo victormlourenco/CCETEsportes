@@ -6,18 +6,13 @@ import (
 	"CCETEsportes/lib/database/config"
 
 	"github.com/jinzhu/gorm"
-	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq" //database driver
 )
-
-var Db *sqlx.DB
-var ConnString string
-var ConnProvider string
 
 var resource *gorm.DB
 
 func init() {
-	ConnProvider = config.GetString("DBProvider")
+	ConnProvider := config.GetString("DBProvider")
 
 	dbName := config.GetString("DBName")
 	dbUser := config.GetString("DBUser")
@@ -25,7 +20,7 @@ func init() {
 	dbHost := config.GetString("DBHost")
 	dbPort := config.GetString("DBPort")
 	dbSslMode := config.GetString("DBSslMode")
-	ConnString = fmt.Sprintf("dbname='%s' user='%s' password='%s' host='%s' port='%s' sslmode='%s'",
+	ConnString := fmt.Sprintf("dbname='%s' user='%s' password='%s' host='%s' port='%s' sslmode='%s'",
 		dbName, dbUser, dbPass, dbHost, dbPort, dbSslMode)
 
 	resource, _ = gorm.Open(ConnProvider, ConnString)
@@ -42,6 +37,7 @@ func ignoreAssociations(s *gorm.Scope) {
 	s.Set("gorm:save_associations", false)
 }
 
+// Get : Retorna a conexão com o banco
 func Get() *gorm.DB {
 	return resource
 }

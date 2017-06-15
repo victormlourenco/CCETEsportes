@@ -1,5 +1,10 @@
 package model
 
+import (
+	"CCETEsportes/lib/database"
+)
+
+// Equipe : Definição do objeto de tipo equipe.
 type Equipe struct {
 	CodEquipe  uint64 `gorm:"primary_key:true"`
 	Nome       string
@@ -16,20 +21,10 @@ type Equipe struct {
 	Tecnico    string
 }
 
-// set User's table name to be `profiles`
-func (Equipe) TableName() string {
-	return "equipes"
-}
-
-func (Equipe) migrateTables() {
-}
-
-func (Equipe) migrateConstraints() {
-}
-
+// GetAll : Consulta todas as partidas presentes no banco ordenando por colocação no campeonato
 func (Equipe) GetAll() ([]Equipe, error) {
 	var equipes []Equipe
-	result := resource.Raw("SELECT cod_equipe, nome, pontuacao, partidas, vitorias, empates, derrotas, gols_pro, gols_contra, gols_pro - gols_contra AS saldo_gols, row_number() OVER (ORDER BY pontuacao DESC, gols_pro - gols_contra DESC) as posicao FROM equipes").Order("posicao").Find(&equipes)
+	result := database.Get().Raw("SELECT cod_equipe, nome, pontuacao, partidas, vitorias, empates, derrotas, gols_pro, gols_contra, gols_pro - gols_contra AS saldo_gols, row_number() OVER (ORDER BY pontuacao DESC, gols_pro - gols_contra DESC) as posicao FROM equipes").Order("posicao").Find(&equipes)
 	if result.Error != nil {
 		return nil, result.Error
 	}

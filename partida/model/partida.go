@@ -2,10 +2,12 @@ package model
 
 import (
 	equipeModel "CCETEsportes/equipe/model"
+	"CCETEsportes/lib/database"
 	"errors"
 	"time"
 )
 
+// Partida : Definição do objeto de tipo partida.
 type Partida struct {
 	CodPartida  uint64 `gorm:"primary_key:true"`
 	Local       string
@@ -18,6 +20,7 @@ type Partida struct {
 	Equipe2     equipeModel.Equipe `gorm:"ForeignKey:CodEquipe2"`
 }
 
+// Validate : Realiza a validação dos campos do objeto do tipo partida antes da sua inserção do banco
 func (p *Partida) Validate() error {
 	if p == nil {
 		return errors.New("Partida inválida")
@@ -38,10 +41,11 @@ func (p *Partida) Validate() error {
 	return nil
 }
 
+// GetAll : Consulta todas as partidas presentes no banco ordenando por data
 func (Partida) GetAll() ([]Partida, error) {
 	var partidas []Partida
-	preloads := resource.Preload("Equipe1").Preload("Equipe2")
-	result := preloads.Find(&partidas).Order("Data DESC")
+	preloads := database.Get().Preload("Equipe1").Preload("Equipe2")
+	result := preloads.Order("Data DESC").Find(&partidas)
 	if result.Error != nil {
 		return nil, result.Error
 	}
@@ -49,12 +53,13 @@ func (Partida) GetAll() ([]Partida, error) {
 	return partidas, nil
 }
 
+// Save : Armazena partida no banco
 func (p *Partida) Save() error {
 	err := p.Validate()
 	if err != nil {
 		return err
 	}
-	result := resource.Create(&p)
+	result := database.Get().Create(&p)
 	if result.Error != nil {
 		return result.Error
 	}
