@@ -14,7 +14,7 @@ CREATE TABLE IF NOT exists public.Jogadores (
 CREATE TABLE IF NOT exists public.Equipes (
                 Cod_Equipe BIGINT NOT NULL DEFAULT NEXTVAL('equipes_cod_seq'),
                 Nome TEXT NOT NULL,
-                Estado VARCHAR(2) NOT NULL,
+                Estado VARCHAR(2),
                 Pontuacao BIGINT NOT NULL DEFAULT 0,
                 Gols_Pro BIGINT NOT NULL DEFAULT 0,
                 Gols_Contra BIGINT NOT NULL DEFAULT 0,
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT exists public.Equipes (
                 Vitorias BIGINT NOT NULL DEFAULT 0,
                 Derrotas BIGINT NOT NULL DEFAULT 0,
                 Empates BIGINT NOT NULL DEFAULT 0,
-                Tecnico TEXT NOT NULL,
+                Tecnico TEXT,
                 CONSTRAINT equipes_pk PRIMARY KEY (Cod_Equipe)
 );
 
