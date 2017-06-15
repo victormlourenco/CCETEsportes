@@ -30,10 +30,11 @@ CREATE TABLE IF NOT exists public.Equipes (
 CREATE TABLE IF NOT exists public.Partidas (
                 Cod_Partida BIGINT NOT NULL DEFAULT NEXTVAL('partidas_cod_seq'),
                 Local TEXT,
-                Placar TEXT,
                 Data DATE,
-                Cod_Equipe_1 BIGINT NOT NULL,
-                Cod_Equipe_2 BIGINT NOT NULL,
+                Cod_Equipe1 BIGINT NOT NULL,
+                Gols_Equipe1 BIGINT NOT NULL DEFAULT 0,
+                Cod_Equipe2 BIGINT NOT NULL,
+                Gols_Equipe2 BIGINT NOT NULL DEFAULT 0,
                 CONSTRAINT partidas_pk PRIMARY KEY (Cod_Partida)
 );
 
@@ -57,14 +58,14 @@ ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE public.Partidas ADD CONSTRAINT equipes_partidas_fk
-FOREIGN KEY (Cod_Equipe_1)
+FOREIGN KEY (Cod_Equipe1)
 REFERENCES public.Equipes (Cod_Equipe)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE public.Partidas ADD CONSTRAINT equipes_partidas_fk1
-FOREIGN KEY (Cod_Equipe_2)
+FOREIGN KEY (Cod_Equipe2)
 REFERENCES public.Equipes (Cod_Equipe)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
