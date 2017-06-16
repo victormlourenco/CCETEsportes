@@ -4,6 +4,7 @@ import (
 	equipeModel "CCETEsportes/equipe/model"
 	"CCETEsportes/lib/database"
 	"CCETEsportes/partida/model"
+	"errors"
 	"strconv"
 	"time"
 
@@ -48,7 +49,7 @@ func AdicionarPartida(c *gin.Context) error {
 	data := c.PostForm("data")
 	t, err := time.Parse("2006-01-02T15:04", data)
 	if err != nil {
-		return err
+		return errors.New("Data inválida")
 	}
 	partida.Data = t
 
