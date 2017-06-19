@@ -36,8 +36,8 @@ func (Equipe) GetAll() ([]Equipe, error) {
 }
 
 // Get : Consulta uma determinada equipe
-func (e *Equipe) Get() error {
-	get := database.Get().First(e)
+func (e *Equipe) Get(tx *gorm.DB) error {
+	get := tx.Find(&e)
 	if get.Error != nil {
 		return get.Error
 	}

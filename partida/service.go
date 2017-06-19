@@ -61,14 +61,14 @@ func AdicionarPartida(c *gin.Context) error {
 	}
 
 	eqp1 := equipeModel.Equipe{CodEquipe: partida.CodEquipe1}
-	err = eqp1.Get()
+	err = eqp1.Get(tx)
 	if err != nil {
 		tx.Rollback()
 		return err
 	}
 
 	eqp2 := equipeModel.Equipe{CodEquipe: partida.CodEquipe2}
-	err = eqp2.Get()
+	err = eqp2.Get(tx)
 	if err != nil {
 		tx.Rollback()
 		return err
