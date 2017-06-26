@@ -18,7 +18,6 @@ CREATE TABLE IF NOT exists public.Equipes (
                 Pontuacao BIGINT NOT NULL DEFAULT 0,
                 Gols_Pro BIGINT NOT NULL DEFAULT 0,
                 Gols_Contra BIGINT NOT NULL DEFAULT 0,
-		Partidas BIGINT NOT NULL DEFAULT 0,
                 Vitorias BIGINT NOT NULL DEFAULT 0,
                 Derrotas BIGINT NOT NULL DEFAULT 0,
                 Empates BIGINT NOT NULL DEFAULT 0,

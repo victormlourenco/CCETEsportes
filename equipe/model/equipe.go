@@ -15,7 +15,7 @@ type Equipe struct {
 	Pontuacao  uint64
 	GolsPro    uint64
 	GolsContra uint64
-	Partidas   uint64
+	Partidas   uint64 `gorm:"-"`
 	Vitorias   uint64
 	Derrotas   uint64
 	Empates    uint64
@@ -27,7 +27,7 @@ type Equipe struct {
 // GetAll : Consulta todas as partidas presentes no banco ordenando por colocação no campeonato
 func (Equipe) GetAll() ([]Equipe, error) {
 	var equipes []Equipe
-	result := database.Get().Raw("SELECT cod_equipe, nome, pontuacao, partidas, vitorias, empates, derrotas, gols_pro, gols_contra, gols_pro - gols_contra AS saldo_gols, row_number() OVER (ORDER BY pontuacao DESC, gols_pro - gols_contra DESC) as posicao FROM equipes").Order("posicao").Find(&equipes)
+	result := database.Get().Raw("SELECT cod_equipe, nome, pontuacao, vitorias, empates, derrotas, vitorias+derrotas+empates AS partidas, gols_pro, gols_contra, gols_pro - gols_contra AS saldo_gols, row_number() OVER (ORDER BY pontuacao DESC, gols_pro - gols_contra DESC) as posicao FROM equipes").Order("posicao").Find(&equipes)
 	if result.Error != nil {
 		return nil, result.Error
 	}

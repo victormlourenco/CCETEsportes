@@ -76,10 +76,8 @@ func AdicionarPartida(c *gin.Context) error {
 
 	eqp1.GolsPro = eqp1.GolsPro + partida.GolsEquipe1
 	eqp1.GolsContra = eqp1.GolsContra + partida.GolsEquipe2
-	eqp1.Partidas = eqp1.Partidas + 1
 	eqp2.GolsPro = eqp2.GolsPro + partida.GolsEquipe2
 	eqp2.GolsContra = eqp2.GolsContra + partida.GolsEquipe1
-	eqp2.Partidas = eqp2.Partidas + 1
 
 	if partida.GolsEquipe1 > partida.GolsEquipe2 {
 		eqp1.Vitorias++
