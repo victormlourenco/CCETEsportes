@@ -7,6 +7,7 @@ CREATE SEQUENCE jogadores_cod_seq;
 CREATE TABLE IF NOT exists public.Jogadores (
                 Cod_Jogador BIGINT NOT NULL DEFAULT NEXTVAL('jogadores_cod_seq'),
                 Camisa TEXT NOT NULL,
+                Nome TEXT NOT NULL,
                 CONSTRAINT jogador_pk PRIMARY KEY (Cod_Jogador)
 );
 
